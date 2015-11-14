@@ -31,10 +31,10 @@ exports.save = function(name, email, password, callback){
 
 	new db.User({
 
-              'name': name,
-              'email': email,
-              'password': password,
-              'created_at': new Date() 
+              name: name,
+              email: email,
+              password: password,
+              created_at: new Date() 
 
         }).save(function(error, user){
                 if(error)
@@ -50,29 +50,37 @@ exports.update = function(id, name, email, password, callback){
 
   	db.User.findById(id, function(error, user){
 
+
+
       if (name) {
          user.name = name;
 
-      };
-      if (email) {
+      }
 
+       if (email) {
          user.email = email;
 
-      };
-      if (password) {
-         user.password = password;
-      };
+      }
 
-   }).save(function(error, user){
+       if (password) {
+         user.password = password;
+
+      }
+      user.save(function(error, user){
+
       if(error){
          callback({error: 'Nao foi possivel alterar o usuário'});
       }else{
          callback(user);
       }
 
-   });
+      });
 
-};
+
+   });
+   };
+
+
 
 exports.delete = function(id, callback){
 	db.User.findById(id, function(error, user){
